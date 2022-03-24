@@ -52,5 +52,21 @@ namespace Evaluation_Manager.Repositories
 
             return activity;
         }
+
+        public static Activity GetActivity(int id)
+        {
+            Activity activity = null;
+            string sql = $"SELECT * FROM Activities WHERE Id = {id}";
+            DB.OpenConnection();
+            var reader = DB.GetDataReader(sql);
+            if (reader.HasRows)
+            {
+                reader.Read();
+                activity = CreateObject(reader);
+            }
+
+            DB.CloseConnection();
+            return activity;
+        }
     }
 }
