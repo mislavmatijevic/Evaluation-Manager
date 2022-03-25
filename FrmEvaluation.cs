@@ -56,11 +56,22 @@ namespace Evaluation_Manager
                 txtEvaluationDate.Text = "-";
                 numPoints.Value = 0;
             }
-             
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var activity = cboActivities.SelectedItem as Activity;
+            var teacher = FrmLogin.LoggedTeacher;
+
+            int points = (int)numPoints.Value;
+
+            teacher.PerformEvaluation(SelectedStudent, activity, points);
             Close();
         }
     }
