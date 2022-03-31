@@ -11,6 +11,26 @@ namespace Evaluation_Manager.Repositories
 {
     public class EvaluationRepository
     {
+        public static List<Evaluation> GetEvaluations(Student student)
+        {
+            List<Evaluation> evaluations = new List<Evaluation>();
+
+            string sql = $"SELECT * FROM Evaluations WHERE IdStudents = {student.Id}";
+            DB.OpenConnection();
+            var reader = DB.GetDataReader(sql);
+
+            while (reader.Read())
+            {
+                Evaluation evaluation = CreateObject(reader);
+                evaluations.Add(evaluation);
+            }
+
+            reader.Close();
+            DB.CloseConnection();
+
+            return evaluations;
+        }
+
         public static Evaluation GetEvaluation(Student student, Activity activity)
         {
             Evaluation evaluation = null;
